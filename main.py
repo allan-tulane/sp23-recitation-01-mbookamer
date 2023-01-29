@@ -39,6 +39,18 @@ def _binary_search(mylist, key, left, right):
 	"""
 	### TODO
 
+	middle = len(mylist) // 2
+	
+	if key == mylist[middle]:
+		return middle
+	elif key < mylist[middle]:
+		return _binary_search(mylist, key, left, right-1)
+	else:
+		return _binary_search(mylist, key, left+1, right)
+	
+	return -1 
+			
+	
 	###
 
 def test_binary_search():
@@ -47,6 +59,8 @@ def test_binary_search():
 	assert binary_search([1,2,3,4,5], 6) == -1
 	### TODO: add two more tests here.
 
+	assert binary_search([1,2,3,4,5], 3) == 2
+	assert binary_search([1,2,3,4,5], 7) == -1
 	###
 
 
@@ -69,6 +83,13 @@ def time_search(search_fn, mylist, key):
 	  search function on this input.
 	"""
 	### TODO
+	
+	time.time1()
+	sort_fn(mylist, key)
+	time.time2()
+	milli = 1000 * (time.time2() - time.time1())
+	return milli
+	
 
 	###
 
