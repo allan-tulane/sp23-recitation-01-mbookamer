@@ -7,6 +7,8 @@ import tabulate
 import time
 ###
 
+pytest main.py::test_binary_search
+
 def linear_search(mylist, key):
 	""" done. """
 	for i,v in enumerate(mylist):
@@ -14,7 +16,7 @@ def linear_search(mylist, key):
 			return i
 	return -1
 
-def test_linear_search():
+def test_linear_search(): #worst case input value of key would be n
 	""" done. """
 	assert linear_search([1,2,3,4,5], 5) == 4
 	assert linear_search([1,2,3,4,5], 1) == 0
@@ -51,13 +53,11 @@ def _binary_search(mylist, key, left, right):
 		return _binary_search(mylist, key, left+1, right)
 	
 	pass
-	
-	
 			
 	
 	###
 
-def test_binary_search():
+def test_binary_search(): #worst case input value would be 0 or n because these are the endpoints for every subsequent interval
 	assert binary_search([1,2,3,4,5], 5) == 4
 	assert binary_search([1,2,3,4,5], 1) == 0
 	assert binary_search([1,2,3,4,5], 6) == -1
@@ -66,6 +66,8 @@ def test_binary_search():
 	assert binary_search([1,2,3,4,5], 3) == 2
 	assert binary_search([], 2) == -1
 	###
+	
+pytest main.py::test_binary_search
 
 
 def time_search(search_fn, mylist, key):
@@ -121,7 +123,11 @@ def compare_search(sizes=[1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7]):
       		result.append((sizes[i], linear_search_time, binary_search_time))
     	return result
 
+print_results(compare_search())
+
 	###
+	
+pytest main.py::test_compare_search
 
 def print_results(results):
 	""" done """
@@ -137,3 +143,8 @@ def test_compare_search():
 	assert res[1][0] == 100
 	assert res[0][1] < 1
 	assert res[1][1] < 1
+	
+	
+
+		
+		
