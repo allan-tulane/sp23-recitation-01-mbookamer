@@ -7,7 +7,7 @@ import tabulate
 import time
 ###
 
-pytest main.py::test_binary_search
+
 
 def linear_search(mylist, key):
 	""" done. """
@@ -40,17 +40,17 @@ def _binary_search(mylist, key, left, right):
 	  index of key in mylist, or -1 if not present.
 	"""
 	### TODO
-
-	middle = len(mylist) // 2
 	
-	if left > right:
-		return -1
-	elif key == mylist[middle]:
-		return middle
-	elif key < mylist[middle]:
-		return _binary_search(mylist, key, left, right-1)
+	if right >= left:
+		middle = (left + right) // 2
+		if key == mylist[middle]:
+			return middle
+		elif key > mylist[middle]:
+			return _binary_search(mylist, key, middle+1, right)
+		else:
+			return _binary_search(mylist, key, left, middle-1)
 	else:
-		return _binary_search(mylist, key, left+1, right)
+		return -1
 	
 	pass
 			
@@ -67,7 +67,7 @@ def test_binary_search(): #worst case input value would be 0 or n because these 
 	assert binary_search([], 2) == -1
 	###
 	
-pytest main.py::test_binary_search
+
 
 
 def time_search(search_fn, mylist, key):
@@ -91,7 +91,7 @@ def time_search(search_fn, mylist, key):
 	### TODO
 	
 	start = time.time()
-	sort_fn(mylist, key)
+	search_fn(mylist, key)
 	end = time.time()
 	milli = 1000 * (end - start)
 	return milli
@@ -114,20 +114,21 @@ def compare_search(sizes=[1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7]):
 	  indicating the number of milliseconds it takes
 	  for each method to run on each value of n
 	"""
-	### TODO
+	result = []
 	
 	for i in range(len(sizes)):
 		times = list(range(0,int(sizes[i])))
 		linear_search_time = time_search(linear_search, times, -1)
-      		binary_search_time = time_search(binary_search, times, -1)
-      		result.append((sizes[i], linear_search_time, binary_search_time))
-    	return result
+		binary_search_time = time_search(binary_search, times, -1)
+		result.append((sizes[i], linear_search_time, binary_search_time))
+	return result
 
-print_results(compare_search())
+
+
 
 	###
 	
-pytest main.py::test_compare_search
+
 
 def print_results(results):
 	""" done """
@@ -143,8 +144,5 @@ def test_compare_search():
 	assert res[1][0] == 100
 	assert res[0][1] < 1
 	assert res[1][1] < 1
-	
-	
-
 		
-		
+print_results(compare_search())
