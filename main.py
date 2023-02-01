@@ -41,14 +41,18 @@ def _binary_search(mylist, key, left, right):
 
 	middle = len(mylist) // 2
 	
-	if key == mylist[middle]:
+	if left > right:
+		return -1
+	elif key == mylist[middle]:
 		return middle
 	elif key < mylist[middle]:
 		return _binary_search(mylist, key, left, right-1)
 	else:
 		return _binary_search(mylist, key, left+1, right)
 	
-	return -1 
+	pass
+	
+	
 			
 	
 	###
@@ -60,7 +64,7 @@ def test_binary_search():
 	### TODO: add two more tests here.
 
 	assert binary_search([1,2,3,4,5], 3) == 2
-	assert binary_search([1,2,3,4,5], 7) == -1
+	assert binary_search([], 2) == -1
 	###
 
 
@@ -84,10 +88,10 @@ def time_search(search_fn, mylist, key):
 	"""
 	### TODO
 	
-	time.time1()
+	start = time.time()
 	sort_fn(mylist, key)
-	time.time2()
-	milli = 1000 * (time.time2() - time.time1())
+	end = time.time()
+	milli = 1000 * (end - start)
 	return milli
 	
 
@@ -110,7 +114,12 @@ def compare_search(sizes=[1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7]):
 	"""
 	### TODO
 	
-	tuple = (n, linear_search_time, binary_search_time)
+	for i in range(len(sizes)):
+		times = list(range(0,int(sizes[i])))
+		linear_search_time = time_search(linear_search, times, -1)
+      		binary_search_time = time_search(binary_search, times, -1)
+      		result.append((sizes[i], linear_search_time, binary_search_time))
+    	return result
 
 	###
 
